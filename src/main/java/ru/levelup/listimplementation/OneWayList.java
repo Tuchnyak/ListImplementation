@@ -103,7 +103,7 @@ public class OneWayList<T> implements List<T> {
         return null;
     }
 
-    //remove method Изменение!!!!
+    //remove method
     public T remove(int index) {
         if (index > size - 1) throw new IndexOutOfBoundsException();
 
