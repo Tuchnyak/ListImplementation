@@ -22,7 +22,7 @@ public class L1HWOneWayList {
 
         owl.add(7, "OWL X");
 
-        owl.remove(5);
+        owl.remove("owl 3");
 
         owl.printList();
 

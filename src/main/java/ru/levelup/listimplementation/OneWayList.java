@@ -124,7 +124,7 @@ public class OneWayList<T> implements List<T> {
 
             size--;
             //
-            return  null;
+            return null;
         }
 
         Element<T> prevEl = null;
@@ -141,27 +141,21 @@ public class OneWayList<T> implements List<T> {
     }
 
     public boolean remove(Object o) {
-//        if (o.getClass() != this.getClass()) return false;
-//
-//        Element<T> elementToDelete = (Element<T>) o;
-//        Element<T> currElement = first;
-//
-//        for (int i = 0; i < size; i++) {
-//            if (currElement.equals(elementToDelete)) {
-//                if (i == 0) {
-//                    first = currElement.getNext();
-//                    currElement = null;
-//                }
-//
-//
-//
-//                size--;
-//                return true;
-//            }
-//            currElement = currElement.getNext();
-//        }
 
-        return false;
+        if (first.getValue().getClass() != o.getClass()) return false;
+
+        Element<T> element = first;
+
+        int index = 0;
+
+        while (!element.getValue().equals(o)) {
+            element = element.getNext();
+            index++;
+        }
+
+        remove(index);
+
+        return true;
     }
 
     //Unfinished methods**************************************
@@ -231,7 +225,7 @@ public class OneWayList<T> implements List<T> {
     }
 
     //***************Inner class of Element of the List*************
-    public class Element<T> {
+    private class Element<T> {
 
         private T value;
         private Element<T> next;
