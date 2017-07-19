@@ -89,4 +89,15 @@ public class OwlTest {
         assertEquals(false, owl.isEmpty());
     }
 
+    @Test
+    public void clear() {
+        owl.add("owl 0");
+        owl.add("owl 1");
+        owl.add("owl 2");
+        owl.add("owl 3");
+
+        owl.clear();
+        assertEquals(0, owl.size());
+    }
+
 }

@@ -108,7 +108,7 @@ public class OneWayList<T> implements List<T> {
         return null;
     }
 
-    //remove method ******************************returns deleted element value*********************
+    //remove method
     public T remove(int index) {
         if (index > size - 1) throw new IndexOutOfBoundsException();
 
@@ -144,9 +144,7 @@ public class OneWayList<T> implements List<T> {
         return element.getValue();
     }
 
-    public boolean remove(Object o) {           //Выполнить проверку возвращаемого типа
-
-//        if (first.getValue().getClass() != o.getClass()) return false;
+    public boolean remove(Object o) {
 
         Element element = first;
         boolean isFound = false;
@@ -164,6 +162,25 @@ public class OneWayList<T> implements List<T> {
         }
 
         return isFound;
+    }
+
+    public void clear() {
+        if (size != 0) {
+            Element element = first;
+            Element temp = element;
+
+            for (int i = 0; i < size; i++) {
+                element = element.getNext();
+                temp.setNext(null);
+                temp = element;
+            }
+        }
+        last = null;
+        size = 0;
+    }
+
+    public int indexOf(Object o) {
+        return 0;
     }
 
     //Unfinished methods**************************************
@@ -191,20 +208,12 @@ public class OneWayList<T> implements List<T> {
         return false;
     }
 
-    public void clear() {
-
-    }
-
     public boolean contains(Object o) {
         return false;
     }
 
     public Iterator<T> iterator() {
         return null;
-    }
-
-    public int indexOf(Object o) {
-        return 0;
     }
 
     public int lastIndexOf(Object o) {

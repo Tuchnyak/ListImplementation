@@ -24,7 +24,11 @@ public class L1HWOneWayList {
 
         owl.remove("owl 3");
 
+        owl.clear();
+
         owl.printList();
+
+        System.out.println(owl);
 
         System.out.println(owl.getClass());
 
