@@ -12,8 +12,8 @@ public class OneWayList<T> implements List<T> {
 
     //Fileds*************************************
     private int size = 0;
-    private Element<T> first;
-    private Element<T> last;
+    private Element first;
+    private Element last;
 
     //Methods************************************
     public int size() {
@@ -27,7 +27,7 @@ public class OneWayList<T> implements List<T> {
     public Object[] toArray() {
 
         Object[] arr = new Object[size];
-        Element<T> element = first;
+        Element element = first;
 
         for (int i = 0; i < size; i++) {
             arr[i] = element;
@@ -39,17 +39,19 @@ public class OneWayList<T> implements List<T> {
 
     public boolean add(T t) {
 
-        Element<T> element = new Element<T>(t);
+        Element element = new Element(t);
         if (size == 0) {
             first = element;
             last = element;
-            first.setNext(last);
-            size++;
+//            first.setNext(last);      //лишнее
+//            size++;
         } else {
             last.setNext(element);
             last = element;
-            size++;
+//            size++;
         }
+
+        size++;
 
         return true;
     }
@@ -57,8 +59,8 @@ public class OneWayList<T> implements List<T> {
     public void add(int index, T t) {
 
         if (index <= size) {
-            Element<T> elementToAdd = new Element<T>(t);
-            Element<T> currElement = first;
+            Element elementToAdd = new Element(t);
+            Element currElement = first;
             int currIndex = 0;
 
             while (currIndex < index - 1) {
@@ -79,7 +81,10 @@ public class OneWayList<T> implements List<T> {
 
     public T get(int index) {
 
-        Element<T> element = first;
+        if (index < 0 || index >= size()) throw new IndexOutOfBoundsException("Index can not be lass then zero " +
+                "or more than count of elements. Index = " + index);
+
+        Element element = first;
 
         for (int i = 0; i < index; i++) {
             element = element.getNext();
@@ -92,7 +97,7 @@ public class OneWayList<T> implements List<T> {
 
         if (index > size - 1) throw new IndexOutOfBoundsException();
 
-        Element<T> el = first;
+        Element el = first;
 
         for (int i = 0; i < index; i++) {
             el = el.getNext();
@@ -103,31 +108,30 @@ public class OneWayList<T> implements List<T> {
         return null;
     }
 
-    //remove method
+    //remove method ******************************returns deleted element value*********************
     public T remove(int index) {
         if (index > size - 1) throw new IndexOutOfBoundsException();
 
-        Element<T> element = first;
+        Element element = first;
+
+        //добавить для  size == 1
 
         if (index == 0) {
+            T t = first.getValue();
             first = element.getNext();
             size--;
-            return null;
+            return t;
         }
 
-        if (index == size - 1) {
-            for (int i = 0; i < index - 1; i++) {
-                element = element.getNext();
-            }
-            last = element;
-            last.setNext(null);
-
+        if (size == 1) {
+            T t = first.getValue();
+            first = null;
+            last = null;
             size--;
-            //
-            return null;
+            return t;
         }
 
-        Element<T> prevEl = null;
+        Element prevEl = null;
         for (int i = 0; i < index; i++) {
             if (i == index - 1) {
                 prevEl = element;
@@ -135,27 +139,31 @@ public class OneWayList<T> implements List<T> {
             element = element.getNext();
         }
         prevEl.setNext(element.getNext());
-
         size--;
-        return null;
+
+        return element.getValue();
     }
 
-    public boolean remove(Object o) {
+    public boolean remove(Object o) {           //Выполнить проверку возвращаемого типа
 
-        if (first.getValue().getClass() != o.getClass()) return false;
+//        if (first.getValue().getClass() != o.getClass()) return false;
 
-        Element<T> element = first;
+        Element element = first;
+        boolean isFound = false;
 
-        int index = 0;
+        int index;
 
-        while (!element.getValue().equals(o)) {
+        for (int i = 0; i < size; i++) {
+            if (element.getValue().equals(o)) {
+                index = i;
+                isFound = true;
+                remove(index);
+                break;
+            }
             element = element.getNext();
-            index++;
         }
 
-        remove(index);
-
-        return true;
+        return isFound;
     }
 
     //Unfinished methods**************************************
@@ -216,8 +224,7 @@ public class OneWayList<T> implements List<T> {
     }
 
     public void printList() {
-        Element<T> element = new Element<T>();
-        element = first;
+        Element element = first;
         for (int i = 0; i < size; i++) {
             System.out.println(element.getValue() + " index: " + i);
             element = element.getNext();
@@ -225,10 +232,10 @@ public class OneWayList<T> implements List<T> {
     }
 
     //***************Inner class of Element of the List*************
-    private class Element<T> {
+    private class Element {
 
         private T value;
-        private Element<T> next;
+        private Element next;
 
         private Element() {
             this.value = null;
@@ -240,11 +247,11 @@ public class OneWayList<T> implements List<T> {
             this.next = null;
         }
 
-        private Element<T> getNext() {
+        private Element getNext() {
             return next;
         }
 
-        private void setNext(Element<T> next) {
+        private void setNext(Element next) {
             this.next = next;
         }
 
@@ -260,20 +267,20 @@ public class OneWayList<T> implements List<T> {
             return next != null;
         }
 
-        public int hashCode() {
-            return super.hashCode();
-        }
+//        public int hashCode() {
+//            return super.hashCode();
+//        }
 
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null) return false;
-            if (this.getClass() != o.getClass()) return false;
-            Element<T> element = (Element) o;
-            if (this.getValue().equals(element.getValue())) {
-                return true;
-            }
-            return false;
-        }
+//        public boolean equals(Object o) {
+////            if (this == o) return true;
+//            if (o == null) return false;
+//            if (this.getValue().getClass() != o.getClass()) return false;
+////            Element element = (Element) o;
+//            if (this.getValue().equals(o)) {
+//                return true;
+//            }
+//            return false;
+//        }
 
     }
 }
