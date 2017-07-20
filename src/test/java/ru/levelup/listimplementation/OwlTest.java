@@ -100,4 +100,54 @@ public class OwlTest {
         assertEquals(0, owl.size());
     }
 
+    @Test
+    public void indexOf() {
+        owl.add("owl 0");
+        owl.add("owl 1");
+        owl.add("owl 2");
+        owl.add("owl 3");
+
+        assertEquals(0, owl.indexOf("owl 0"));
+        assertEquals(2, owl.indexOf("owl 2"));
+        assertEquals(3, owl.indexOf("owl 3"));
+    }
+
+    @Test
+    public void lastIndexOf() {
+        assertEquals("empty list", -1, owl.lastIndexOf("owl"));
+
+        owl.add("owl 0");
+        owl.add("owl");
+        owl.add("owl 2");
+        owl.add("owl 3");
+        assertEquals("one owl in list", 1, owl.lastIndexOf("owl"));
+
+        owl.add("owl");
+        assertEquals("tow owls in list", 4, owl.lastIndexOf("owl"));
+    }
+
+    @Test
+    public void contains() {
+        assertFalse("empty list", owl.contains("owl"));
+
+        owl.add("owl 0");
+        owl.add("owl");
+        owl.add("owl 2");
+        owl.add("owl 3");
+        assertTrue("search owl", owl.contains("owl"));
+        assertFalse("serach big owl", owl.contains("owl 7"));
+    }
+
+    @Test (expected = IndexOutOfBoundsException.class)
+    public void subList() {
+        owl.subList(0, 1);
+
+        owl.add("owl 0");
+        owl.add("owl 1");
+        owl.add("owl 2");
+        owl.add("owl 3");
+        owl.add("owl 4");
+        assertEquals(5, owl.subList(0, 4).size());
+    }
+
 }

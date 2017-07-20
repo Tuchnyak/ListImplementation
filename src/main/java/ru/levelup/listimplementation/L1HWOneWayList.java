@@ -17,6 +17,12 @@ public class L1HWOneWayList {
         owl.add("owl 5");
         owl.add("owl 6");
 
+        OneWayList<String> owl2 = (OneWayList<String>) owl.subList(2, 6);
+
+        owl2.printList();
+
+        System.out.println("**********");
+
         owl.printList();
         System.out.println("**********");
 

@@ -1,9 +1,7 @@
 package ru.levelup.listimplementation;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Created by George on 15.07.2017.
@@ -180,11 +178,78 @@ public class OneWayList<T> implements List<T> {
     }
 
     public int indexOf(Object o) {
-        return 0;
+
+        int index = 0;
+        Element element = first;
+
+        while (!element.getValue().equals(o)) {
+            element = element.getNext();
+            index++;
+        }
+
+        return index;
+    }
+
+    public int lastIndexOf(Object o) {
+        int indexToReturn = -1;
+
+        if (size != 0) {
+            Element element = first;
+            for (int i = 0; i < size; i++) {
+                if (element.getValue().equals(o)) {
+                    indexToReturn = i;
+                }
+                element = element.getNext();
+            }
+        }
+
+        return indexToReturn;
+    }
+
+    public boolean contains(Object o) {
+
+        boolean isHere = false;
+
+        if (size != 0) {
+            Element element = first;
+            for (int i = 0; i < size; i++) {
+                if (element.getValue().equals(o)) {
+                    isHere = true;
+                    break;
+                }
+                element = element.getNext();
+            }
+        }
+
+        return isHere;
+    }
+
+    public List<T> subList(int fromIndex, int toIndex) {
+
+        if (fromIndex < 0 || fromIndex >= size || toIndex <= 0 || toIndex > size)
+            throw new IndexOutOfBoundsException();
+
+        List<T> list = new OneWayList<>();
+
+        if (size != 0) {
+            Element element = first;
+            for (int i = 0; i < toIndex + 1; i++) {
+                if (i >= fromIndex) {
+                    list.add(element.getValue());
+                }
+                element = element.getNext();
+            }
+        }
+
+        return list;
     }
 
     //Unfinished methods**************************************
-    public <T1> T1[] toArray(T1[] a) {
+
+    public <T> T[] toArray(T[] a) {
+
+//        T[] arr = (T[]) Array.newInstance(Element.class, 10);
+
         return null;
     }
 
@@ -208,16 +273,8 @@ public class OneWayList<T> implements List<T> {
         return false;
     }
 
-    public boolean contains(Object o) {
-        return false;
-    }
-
     public Iterator<T> iterator() {
         return null;
-    }
-
-    public int lastIndexOf(Object o) {
-        return 0;
     }
 
     public ListIterator<T> listIterator() {
@@ -225,10 +282,6 @@ public class OneWayList<T> implements List<T> {
     }
 
     public ListIterator<T> listIterator(int index) {
-        return null;
-    }
-
-    public List<T> subList(int fromIndex, int toIndex) {
         return null;
     }
 
