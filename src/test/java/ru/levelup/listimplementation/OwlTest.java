@@ -246,4 +246,29 @@ public class OwlTest {
         assertEquals(2, owl.size());
         assertEquals("owl 0", owl.get(0));
     }
+
+    @Test
+    public void toArrayComplex() {
+        owl.add("owl 0");
+        owl.add("owl 1");
+        owl.add("owl 2");
+
+        String[] arrStr = new String[10];
+        String[] secondArrStr = owl.toArray(arrStr);
+
+        assertEquals("size",10, secondArrStr.length);
+        assertEquals("check arr[i]","owl 0", secondArrStr[0]);
+        assertEquals("check arr[i]","owl 1", secondArrStr[1]);
+        assertEquals("check arr[i]","owl 2", secondArrStr[2]);
+        assertEquals("check arr[i]",null, secondArrStr[8]);
+
+        arrStr = new String[1];
+        secondArrStr = owl.toArray(arrStr);
+
+        assertEquals("size",3, secondArrStr.length);
+        assertEquals("check arr[i]","owl 0", secondArrStr[0]);
+        assertEquals("check arr[i]","owl 1", secondArrStr[1]);
+        assertEquals("check arr[i]","owl 2", secondArrStr[2]);
+        assertEquals(arrStr.getClass(), owl.toArray(arrStr).getClass());
+    }
 }

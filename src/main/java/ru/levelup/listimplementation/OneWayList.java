@@ -347,14 +347,33 @@ public class OneWayList<T> implements List<T> {
         return false;
     }
 
-    //Unfinished methods**************************************
-
     public <T> T[] toArray(T[] a) {
+        if (a == null) throw new NullPointerException();
 
-//        T[] arr = (T[]) Array.newInstance(Element.class, 10);
+        if (a.length >= size) {
+            Element element = first;
+            for (int i = 0; i < a.length; i++) {
+                if(i < size) {
+                    a[i] = (T) element.getValue();
+                    element = element.getNext();
+                } else a[i] = null;
+            }
+        } else {
+//            a = (T[]) this.toArray();
+//            a = (T[]) new Object[size];
+            a = (T[]) Array.newInstance(a.getClass().getComponentType(), size);
 
-        return null;
+            Element element = first;
+            for (int i = 0; i < size; i++) {
+                a[i] = (T) element.getValue();
+                element = element.getNext();
+            }
+        }
+
+        return a;
     }
+
+    //Unfinished methods**************************************
 
     public Iterator<T> iterator() {
         return null;
