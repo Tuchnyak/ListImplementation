@@ -1,5 +1,7 @@
 package ru.levelup.listimplementation;
 
+import java.util.LinkedList;
+
 /**
  * Created by go_schennikov on 12.07.2017.
  */
@@ -37,6 +39,13 @@ public class L1HWOneWayList {
         System.out.println(owl);
 
         System.out.println(owl.getClass());
+
+        LinkedList<String> listToAdd = new LinkedList<>();
+        listToAdd.add("owl X1");
+        listToAdd.add("owl X2");
+
+        owl.addAll(listToAdd);
+        owl.printList();
 
     }
 

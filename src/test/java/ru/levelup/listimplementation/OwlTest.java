@@ -182,4 +182,22 @@ public class OwlTest {
         assertTrue(owl.containsAll(list));
     }
 
+    @Test
+    public void addAll() {
+        LinkedList<String> listToAdd = new LinkedList<>();
+        listToAdd.add("owl 3");
+        listToAdd.add("owl 4");
+
+        owl.add("owl 0");
+        owl.add("owl 1");
+        owl.add("owl 2");
+        assertTrue(owl.addAll(listToAdd));
+
+        LinkedList<String> secondListToAdd = new LinkedList<>();
+        secondListToAdd.add("owl 5");
+        secondListToAdd.add("owl 6");
+        owl.addAll(secondListToAdd);
+        assertEquals(7, owl.size());
+    }
+
 }

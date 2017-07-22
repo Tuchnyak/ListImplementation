@@ -256,8 +256,12 @@ public class OneWayList<T> implements List<T> {
         }
     }
 
-    public boolean containsAll(Collection<?> c) {
+    private void checkCollectionOnNull(Collection<?> c) {
         if (c == null) throw new NullPointerException();
+    }
+
+    public boolean containsAll(Collection<?> c) {
+        checkCollectionOnNull(c);
 
         if (size != 0) {
             checkClassCastCollection(c);
@@ -274,7 +278,23 @@ public class OneWayList<T> implements List<T> {
                     element = element.getNext();
                 }
             }
-            if(counter == c.size()) return true;
+            if (counter == c.size()) return true;
+        }
+
+        return false;
+    }
+
+    public boolean addAll(Collection<? extends T> c) {
+        checkCollectionOnNull(c);
+        checkClassCastCollection(c);
+
+        if (c.size() != 0) {
+            Object[] arrOfC = c.toArray();
+            for (int i = 0; i < arrOfC.length; i++) {
+                T valueToAdd = (T) arrOfC[i];
+                this.add(valueToAdd);
+            }
+            return true;
         }
 
         return false;
@@ -287,10 +307,6 @@ public class OneWayList<T> implements List<T> {
 //        T[] arr = (T[]) Array.newInstance(Element.class, 10);
 
         return null;
-    }
-
-    public boolean addAll(Collection<? extends T> c) {
-        return false;
     }
 
     public boolean addAll(int index, Collection<? extends T> c) {
