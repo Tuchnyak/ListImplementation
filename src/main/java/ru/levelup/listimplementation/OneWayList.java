@@ -300,6 +300,20 @@ public class OneWayList<T> implements List<T> {
         return false;
     }
 
+    public boolean addAll(int index, Collection<? extends T> c) {
+        checkCollectionOnNull(c);
+        checkClassCastCollection(c);
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
+
+        Object[] arrOfC = c.toArray();
+        for (int i = 0; i < c.size(); i++) {
+            T toAdd = (T) arrOfC[i];
+            this.add(index + i, toAdd);
+        }
+
+        return true;
+    }
+
     //Unfinished methods**************************************
 
     public <T> T[] toArray(T[] a) {
@@ -307,10 +321,6 @@ public class OneWayList<T> implements List<T> {
 //        T[] arr = (T[]) Array.newInstance(Element.class, 10);
 
         return null;
-    }
-
-    public boolean addAll(int index, Collection<? extends T> c) {
-        return false;
     }
 
     public boolean removeAll(Collection<?> c) {

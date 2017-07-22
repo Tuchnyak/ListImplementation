@@ -32,7 +32,7 @@ public class L1HWOneWayList {
 
         owl.remove("owl 3");
 
-        owl.clear();
+//        owl.clear();
 
         owl.printList();
 
@@ -44,7 +44,7 @@ public class L1HWOneWayList {
         listToAdd.add("owl X1");
         listToAdd.add("owl X2");
 
-        owl.addAll(listToAdd);
+        owl.addAll(4,listToAdd);
         owl.printList();
 
     }

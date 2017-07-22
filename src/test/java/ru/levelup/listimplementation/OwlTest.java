@@ -153,14 +153,14 @@ public class OwlTest {
         assertEquals(5, owl.subList(0, 4).size());
     }
 
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void containsAllNullPointerException() {
         Collection<String> list = new LinkedList<>();
         list = null;
         owl.containsAll(list);
     }
 
-    @Test (expected = ClassCastException.class)
+    @Test(expected = ClassCastException.class)
     public void containsAllClassCastException() {
         LinkedList<Integer> list = new LinkedList<>();
         list.add(10);
@@ -198,6 +198,23 @@ public class OwlTest {
         secondListToAdd.add("owl 6");
         owl.addAll(secondListToAdd);
         assertEquals(7, owl.size());
+    }
+
+    @Test
+    public void addAllByIndex() {
+        LinkedList<String> listToAdd = new LinkedList<>();
+        listToAdd.add("owl x1");
+        listToAdd.add("owl x2");
+
+        owl.add("owl 0");
+        owl.add("owl 1");
+        owl.add("owl 2");
+        owl.addAll(2, listToAdd);
+
+        assertEquals(5, owl.size());
+        assertEquals("owl x1", owl.get(2));
+        assertEquals("owl x2", owl.get(3));
+        assertEquals("owl 2", owl.get(4));
     }
 
 }
