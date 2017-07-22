@@ -217,4 +217,33 @@ public class OwlTest {
         assertEquals("owl 2", owl.get(4));
     }
 
+    @Test
+    public void removeAll() {
+        LinkedList<String> listToDel = new LinkedList<>();
+        listToDel.add("owl 0");
+        listToDel.add("owl 2");
+
+        owl.add("owl 0");
+        owl.add("owl 1");
+        owl.add("owl 2");
+        owl.removeAll(listToDel);
+
+        assertEquals(1, owl.size());
+        assertEquals("owl 1", owl.get(0));
+    }
+
+    @Test
+    public void retainAll() {
+        LinkedList<String> listToDel = new LinkedList<>();
+        listToDel.add("owl 0");
+        listToDel.add("owl 2");
+
+        owl.add("owl 0");
+        owl.add("owl 1");
+        owl.add("owl 2");
+        owl.retainAll(listToDel);
+
+        assertEquals(2, owl.size());
+        assertEquals("owl 0", owl.get(0));
+    }
 }

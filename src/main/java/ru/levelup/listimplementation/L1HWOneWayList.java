@@ -41,10 +41,10 @@ public class L1HWOneWayList {
         System.out.println(owl.getClass());
 
         LinkedList<String> listToAdd = new LinkedList<>();
-        listToAdd.add("owl X1");
-        listToAdd.add("owl X2");
+        listToAdd.add("owl 0");
+        listToAdd.add("OWL X");
 
-        owl.addAll(4,listToAdd);
+        owl.retainAll(listToAdd);
         owl.printList();
 
     }

@@ -314,6 +314,39 @@ public class OneWayList<T> implements List<T> {
         return true;
     }
 
+    public boolean removeAll(Collection<?> c) {
+        checkCollectionOnNull(c);
+        checkClassCastCollection(c);
+
+        Object[] arrOfC = c.toArray();
+        for (int i = 0; i < arrOfC.length; i++) {
+            Element element = first;
+            T elementToDelete = (T) arrOfC[i];
+            for (int j = 0; j < size; j++) {
+                if (elementToDelete.equals(element.getValue())) {
+                    this.remove(elementToDelete);
+                }
+                element = element.getNext();
+            }
+        }
+
+        return false;
+    }
+
+    public boolean retainAll(Collection<?> c) {
+        checkCollectionOnNull(c);
+        checkClassCastCollection(c);
+
+        this.clear();
+        Object[] arrOfC = c.toArray();
+
+        for (int i = 0; i < c.size(); i++) {
+            this.add((T) arrOfC[i]);
+        }
+
+        return false;
+    }
+
     //Unfinished methods**************************************
 
     public <T> T[] toArray(T[] a) {
@@ -321,14 +354,6 @@ public class OneWayList<T> implements List<T> {
 //        T[] arr = (T[]) Array.newInstance(Element.class, 10);
 
         return null;
-    }
-
-    public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    public boolean retainAll(Collection<?> c) {
-        return false;
     }
 
     public Iterator<T> iterator() {
