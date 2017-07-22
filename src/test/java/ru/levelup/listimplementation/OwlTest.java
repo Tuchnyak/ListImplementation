@@ -3,6 +3,9 @@ package ru.levelup.listimplementation;
 import org.junit.*;
 
 //import static junit.framework.TestCase.*;
+import java.util.Collection;
+import java.util.LinkedList;
+
 import static org.junit.Assert.*;
 
 /**
@@ -57,7 +60,7 @@ public class OwlTest {
         assertFalse(owl.remove(""));
     }
 
-    @Test (expected = IndexOutOfBoundsException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void get() {
         owl.add("owl 0");
         owl.add("owl 1");
@@ -138,7 +141,7 @@ public class OwlTest {
         assertFalse("serach big owl", owl.contains("owl 7"));
     }
 
-    @Test (expected = IndexOutOfBoundsException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void subList() {
         owl.subList(0, 1);
 
@@ -148,6 +151,35 @@ public class OwlTest {
         owl.add("owl 3");
         owl.add("owl 4");
         assertEquals(5, owl.subList(0, 4).size());
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void containsAllNullPointerException() {
+        Collection<String> list = new LinkedList<>();
+        list = null;
+        owl.containsAll(list);
+    }
+
+    @Test (expected = ClassCastException.class)
+    public void containsAllClassCastException() {
+        LinkedList<Integer> list = new LinkedList<>();
+        list.add(10);
+
+        owl.add("owl");
+        owl.containsAll(list);
+//        if(!"".getClass().equals(list.get(0).getClass())) throw new ClassCastException();
+    }
+
+    @Test
+    public void containsAll() {
+        LinkedList<String> list = new LinkedList<>();
+        list.add("owl 1");
+        list.add("owl 0");
+
+        owl.add("owl 0");
+        owl.add("owl 1");
+        owl.add("owl 2");
+        assertTrue(owl.containsAll(list));
     }
 
 }

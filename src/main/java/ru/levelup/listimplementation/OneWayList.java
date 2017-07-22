@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class OneWayList<T> implements List<T> {
 
-    //Fileds*************************************
+    //Fields*************************************
     private int size = 0;
     private Element first;
     private Element last;
@@ -244,6 +244,38 @@ public class OneWayList<T> implements List<T> {
         return list;
     }
 
+    public boolean containsAll(Collection<?> c) {
+        if (c == null) throw new NullPointerException();
+
+        if (size != 0) {
+
+            Element element;
+            Object[] arrOfC = c.toArray();
+            for (int i = 0; i < c.size(); i++) {
+                element = first;
+                for (int j = 0; j < size; j++) {
+                    if (!element.getValue().getClass().equals(arrOfC[i].getClass())) throw new ClassCastException();
+                    element = element.getNext();
+                }
+            }
+
+            int counter = 0;
+            for (int i = 0; i < c.size(); i++) {
+                element = first;
+                for (int j = 0; j < size; j++) {
+                    if (element.getValue().equals(arrOfC[i])) {
+                        counter++;
+                        break;
+                    }
+                    element = element.getNext();
+                }
+            }
+            if(counter == c.size()) return true;
+        }
+
+        return false;
+    }
+
     //Unfinished methods**************************************
 
     public <T> T[] toArray(T[] a) {
@@ -251,10 +283,6 @@ public class OneWayList<T> implements List<T> {
 //        T[] arr = (T[]) Array.newInstance(Element.class, 10);
 
         return null;
-    }
-
-    public boolean containsAll(Collection<?> c) {
-        return false;
     }
 
     public boolean addAll(Collection<? extends T> c) {
