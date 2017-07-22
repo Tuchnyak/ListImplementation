@@ -244,24 +244,28 @@ public class OneWayList<T> implements List<T> {
         return list;
     }
 
+    private void checkClassCastCollection(Collection<?> c) {
+        Element element;
+        Object[] arrOfC = c.toArray();
+        for (int i = 0; i < c.size(); i++) {
+            element = first;
+            for (int j = 0; j < size; j++) {
+                if (!element.getValue().getClass().equals(arrOfC[i].getClass())) throw new ClassCastException();
+                element = element.getNext();
+            }
+        }
+    }
+
     public boolean containsAll(Collection<?> c) {
         if (c == null) throw new NullPointerException();
 
         if (size != 0) {
+            checkClassCastCollection(c);
 
-            Element element;
             Object[] arrOfC = c.toArray();
-            for (int i = 0; i < c.size(); i++) {
-                element = first;
-                for (int j = 0; j < size; j++) {
-                    if (!element.getValue().getClass().equals(arrOfC[i].getClass())) throw new ClassCastException();
-                    element = element.getNext();
-                }
-            }
-
             int counter = 0;
             for (int i = 0; i < c.size(); i++) {
-                element = first;
+                Element element = first;
                 for (int j = 0; j < size; j++) {
                     if (element.getValue().equals(arrOfC[i])) {
                         counter++;
